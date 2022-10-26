@@ -2,15 +2,24 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AllQuotes from "./pages/AllQuotes";
 import NewQuote from "./pages/NewQuote";
 import QuoteDetail from "./pages/QuoteDetail";
-import RouteParamsEnum from "./enum/RouteParamsEnum";
+import UrlPathEnum from "./enum/UrlPathEnum";
+import Layout from "./layout/Layout";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
+  console.log("base api: ", process.env.REACT_APP_API_BASE);
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/quotes" />} />
-      <Route path="/quotes" element={<AllQuotes />} />
-      <Route path={`/quotes/*`} element={<QuoteDetail />} />
-      <Route path="/new-quote" element={<NewQuote />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route
+          path={UrlPathEnum.root}
+          element={<Navigate to={UrlPathEnum.quotes} />}
+        />
+        <Route path={UrlPathEnum.quotes} element={<AllQuotes />} />
+        <Route path={UrlPathEnum.quoteDetail} element={<QuoteDetail />} />
+        <Route path={UrlPathEnum.newQuote} element={<NewQuote />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Layout>
   );
 }

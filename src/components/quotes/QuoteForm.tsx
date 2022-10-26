@@ -1,8 +1,9 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+// import NavigationPrompt from "react-router-navigation-prompt";
 import styled from "styled-components";
+import { QuoteModel } from "../../models/QuoteModel";
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import classes from "./QuoteForm.module.css";
 
 const FormStyled = styled.form`
   position: relative;
@@ -54,9 +55,15 @@ const FormStyled = styled.form`
   }
 `;
 
-export default function QuoteForm(props: any) {
+type QuoteFormProps = {
+  onAddQuote: (quote: QuoteModel) => void;
+  isLoading?: boolean;
+};
+
+export default function QuoteForm(props: QuoteFormProps) {
   const authorInputRef = useRef<any>();
   const textInputRef = useRef<any>();
+  const [isEntered, setEntered] = useState(false);
 
   function submitFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -69,11 +76,16 @@ export default function QuoteForm(props: any) {
     props.onAddQuote({ author: enteredAuthor, text: enteredText });
   }
 
+  function onFormFocused() {
+    console.log("form focus");
+    setEntered(true);
+  }
+
   return (
     <Card>
-      <FormStyled onSubmit={submitFormHandler}>
+      <FormStyled onSubmit={submitFormHandler} onFocus={onFormFocused}>
         {props.isLoading && (
-          <div className={classes.loading}>
+          <div className="loading">
             <LoadingSpinner />
           </div>
         )}

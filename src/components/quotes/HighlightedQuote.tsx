@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { QuoteModel } from "../../models/QuoteModel";
 
 const FigureStyled = styled.figure`
   background-color: #162b2b;
@@ -22,18 +23,14 @@ const FigureStyled = styled.figure`
 `;
 
 type HighlightedQuoteProps = {
-  text: string;
-  author: string;
+  quote: QuoteModel;
 };
 
-export default function HighlightedQuote({
-  text,
-  author,
-}: HighlightedQuoteProps) {
+export default function HighlightedQuote({ quote }: HighlightedQuoteProps) {
   return (
     <FigureStyled>
-      <p>{text}</p>
-      <figcaption>{author}</figcaption>
+      <p>{quote.text}</p>
+      <figcaption>{quote.author}</figcaption>
     </FigureStyled>
   );
 }

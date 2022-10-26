@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import UrlPathEnum from "../../enum/UrlPathEnum";
+import { QuoteModel } from "../../models/QuoteModel";
 
 const LiStyled = styled.li`
   margin: 1rem 0;
@@ -38,16 +41,22 @@ const LiStyled = styled.li`
   }
 `;
 
-export default function QuoteItem(props: any) {
+type QuoteItemProps = {
+  quote: QuoteModel;
+};
+
+export default function QuoteItem({ quote }: QuoteItemProps) {
   return (
     <LiStyled>
       <figure>
         <blockquote>
-          <p>{props.text}</p>
+          <p>{quote.text}</p>
         </blockquote>
-        <figcaption>{props.author}</figcaption>
+        <figcaption>{quote.author}</figcaption>
       </figure>
-      <a className="btn">View Fullscreen</a>
+      <Link to={`${UrlPathEnum.quotes}/${quote.id}`} className="btn">
+        View Fullscreen
+      </Link>
     </LiStyled>
   );
 }
