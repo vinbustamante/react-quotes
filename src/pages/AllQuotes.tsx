@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import QuoteList from "../components/quotes/QuoteList";
-import useAsync, { AsyncStatusEnum } from "../hooks/useAsync";
+import useAsync from "../hooks/useAsync";
 import getAllQuotes from "../api/getAllQuotes";
-import LoadingSpinner from "../components/UI/LoadingSpinner";
+
+import AsyncResponse from "../components/AsyncResponse";
 
 export default function AllQuotes() {
   const {
@@ -15,19 +16,8 @@ export default function AllQuotes() {
   }, [sendRequest]);
 
   return (
-    <>
-      {status === AsyncStatusEnum.pending && (
-        <div className="centered">
-          <LoadingSpinner />{" "}
-        </div>
-      )}
-      {status === AsyncStatusEnum.error && (
-        <p className="centered focus">There was an error</p>
-      )}
-      {status === AsyncStatusEnum.completed && (
-        <QuoteList quotes={data || []} />
-      )}
-      ;
-    </>
+    <AsyncResponse status={status}>
+      <QuoteList quotes={data || []} />
+    </AsyncResponse>
   );
 }

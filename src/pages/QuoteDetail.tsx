@@ -3,17 +3,17 @@ import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import Comments from "../components/Comments";
 import RouteParamsEnum from "../enum/RouteParamsEnum";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
-import UrlPathEnum from "../enum/UrlPathEnum";
 import useAsync from "../hooks/useAsync";
 import getQuote from "../api/getQuote";
+import AsyncResponse from "../components/AsyncResponse";
 
 export default function QuoteDetail() {
-  const {
-    sendRequest,
-    state: { data: quote },
-  } = useAsync(getQuote);
   const params = useParams();
   const location = useLocation();
+  const {
+    sendRequest,
+    state: { data: quote, status },
+  } = useAsync(getQuote);
 
   const quoteId = params[RouteParamsEnum.splat]?.split("/")[0];
 
@@ -33,19 +33,21 @@ export default function QuoteDetail() {
 
   return (
     <>
-      {quote && <HighlightedQuote quote={quote} />}
-      {quote && (
-        <Routes>
-          <Route
-            path={`/:${RouteParamsEnum.quoteId}`}
-            element={<LoadComment />}
-          />
-          <Route
-            path={`/:${RouteParamsEnum.quoteId}/comments`}
-            element={<Comments />}
-          />
-        </Routes>
-      )}
+      <AsyncResponse status={status}>
+        {quote && <HighlightedQuote quote={quote} />}
+        {quote && (
+          <Routes>
+            <Route
+              path={`/:${RouteParamsEnum.quoteId}`}
+              element={<LoadComment />}
+            />
+            <Route
+              path={`/:${RouteParamsEnum.quoteId}/comments`}
+              element={<Comments />}
+            />
+          </Routes>
+        )}
+      </AsyncResponse>
     </>
   );
 }
