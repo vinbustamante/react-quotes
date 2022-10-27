@@ -1,6 +1,7 @@
 import Constant from "../../Constant";
 import ApiEnum from "../../enum/ApiEnum";
 import { QuoteModel } from "../../models/QuoteModel";
+import delay from "../../service/date/delay";
 import httpRequest, { HttpMethodEnum } from "../../service/http/httpRequest";
 import ObjectMap from "../../type/ObjectMap";
 
@@ -18,5 +19,6 @@ export default async function getAllQuotes(): Promise<QuoteModel[]> {
     };
     transformedQuotes.push(quoteObj);
   }
-  return transformedQuotes;
+  // return transformedQuotes;
+  return delay(5000, transformedQuotes);
 }

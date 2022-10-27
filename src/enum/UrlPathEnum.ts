@@ -1,7 +1,7 @@
 enum UrlPathEnum {
   root = "/",
   quotes = "/quotes",
-  quoteDetail = `/quotes/*`,
+  quoteDetail = `/quotes`,
   newQuote = "/new-quote",
 }
 

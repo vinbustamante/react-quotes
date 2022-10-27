@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { Await, defer, useLoaderData } from "react-router-dom";
 import QuoteList from "./components/QuoteList";
-import useAsync from "../../hooks/useAsync";
 import getAllQuotes from "../../api/quote/getAllQuotes";
-
-import AsyncResponse from "../../components/AsyncResponse";
+import SuspenseLoader from "../../components/SuspenseLoader";
 
 export default function AllQuotes() {
-  const {
-    sendRequest,
-    state: { data, status },
-  } = useAsync(getAllQuotes);
-
-  useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
-
+  const loaderData: any = useLoaderData();
   return (
-    <AsyncResponse status={status}>
-      <QuoteList quotes={data || []} />
-    </AsyncResponse>
+    <SuspenseLoader>
+      <Await
+        resolve={loaderData.quotes}
+        errorElement={<p>Error loading data</p>}
+      >
+        {(quotes) => <QuoteList quotes={quotes || []} />}
+      </Await>
+    </SuspenseLoader>
   );
+}
+
+export function getAllQuotesLoader() {
+  return defer({
+    quotes: getAllQuotes(),
+  });
 }

@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import MainNavigation from "./MainNavigation";
 
@@ -8,13 +9,13 @@ const MainStyled = styled.main`
   max-width: 40rem;
 `;
 
-type LayoutProps = PropsWithChildren<{}>;
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout() {
   return (
     <>
       <MainNavigation />
-      <MainStyled>{children}</MainStyled>
+      <MainStyled>
+        <Outlet />
+      </MainStyled>
     </>
   );
 }

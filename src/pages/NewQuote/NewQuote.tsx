@@ -1,27 +1,45 @@
-import { useNavigate } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "react-router-dom";
 import { QuoteModel } from "../../models/QuoteModel";
 import QuoteForm from "./components/QuoteForm";
 import UrlPathEnum from "../../enum/UrlPathEnum";
-import useAsync, { AsyncStatusEnum } from "../../hooks/useAsync";
 import addQuote from "../../api/quote/addQuote";
+import ValidationException from "../../exception/ValidationException";
 
 export default function NewQuote() {
-  const navigate = useNavigate();
-  const {
-    sendRequest,
-    state: { status },
-  } = useAsync(addQuote);
-
-  // handler
-  async function onAddQuote(quote: QuoteModel) {
-    await sendRequest(quote);
-    navigate(UrlPathEnum.quotes);
-  }
-
+  const validation: any = useActionData();
+  const navigation = useNavigation();
   return (
-    <QuoteForm
-      isLoading={status === AsyncStatusEnum.pending}
-      onAddQuote={onAddQuote}
-    />
+    <>
+      {validation instanceof ValidationException && (
+        <p>there was a validation error</p>
+      )}
+      <QuoteForm
+        validationError={validation?.validationError}
+        isSubmitting={navigation.state === "submitting"}
+      />
+    </>
   );
+}
+
+export async function newQuoteAction({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const newQuote: QuoteModel = {
+    author: formData.get("author")!.toString(),
+    text: formData.get("text")!.toString(),
+  };
+  try {
+    await addQuote(newQuote);
+  } catch (err: any) {
+    if (err instanceof ValidationException) {
+      return err;
+    } else {
+      throw err;
+    }
+  }
+  return redirect(UrlPathEnum.quotes);
 }

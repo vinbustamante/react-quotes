@@ -7,6 +7,8 @@ import AsyncResponse from "../../../components/AsyncResponse";
 import CommentList from "./CommentsList";
 
 import NewCommentForm from "./NewCommentForm";
+import { LoaderFunctionArgs, useLoaderData, useParams } from "react-router-dom";
+import RouteParamsEnum from "../../../enum/RouteParamsEnum";
 
 const SectionStyled = styled.section`
   text-align: center;
@@ -16,46 +18,41 @@ const SectionStyled = styled.section`
   }
 `;
 
-type CommentsProps = {
-  quote: QuoteModel;
-};
-
-export default function Comments({ quote }: CommentsProps) {
+export default function Comments() {
   const [isAddingComment, setIsAddingComment] = useState(false);
-  const {
-    sendRequest,
-    state: { data: quoteComments, status },
-  } = useAsync(getAllComments);
+  const comments: any = useLoaderData();
+  const params = useParams();
+  const quoteId = params[RouteParamsEnum.quoteId];
 
   const startAddCommentHandler = () => {
     setIsAddingComment(true);
   };
 
-  // event handler
+  // // event handler
   function onCommentAdded() {
     setIsAddingComment(false);
-    sendRequest(quote.id);
+    // sendRequest(quote.id);
   }
 
-  // side effect
-  useEffect(() => {
-    sendRequest(quote.id);
-  }, [sendRequest]);
+  // // side effect
 
   return (
-    <AsyncResponse status={status}>
-      <SectionStyled>
-        <h2>User Comments</h2>
-        {!isAddingComment && (
-          <button className="btn" onClick={startAddCommentHandler}>
-            Add a Comment
-          </button>
-        )}
-        {isAddingComment && (
-          <NewCommentForm quote={quote} onCommentAdded={onCommentAdded} />
-        )}
-        {<CommentList comments={quoteComments || []} />}
-      </SectionStyled>
-    </AsyncResponse>
+    <SectionStyled>
+      <h2>User Comments</h2>
+      {!isAddingComment && (
+        <button className="btn" onClick={startAddCommentHandler}>
+          Add a Comment
+        </button>
+      )}
+      {isAddingComment && quoteId && (
+        <NewCommentForm quoteId={quoteId} onCommentAdded={onCommentAdded} />
+      )}
+      {comments && <CommentList comments={comments} />}
+    </SectionStyled>
   );
+}
+
+export function commentsLoader({ params }: LoaderFunctionArgs) {
+  const quoteId = params[RouteParamsEnum.quoteId];
+  return getAllComments(quoteId!);
 }
