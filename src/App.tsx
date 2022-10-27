@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import AllQuotes from "./pages/AllQuotes";
-import NewQuote from "./pages/NewQuote";
-import QuoteDetail from "./pages/QuoteDetail";
+import AllQuotes from "./pages/AllQuotes/AllQuotes";
+import NewQuote from "./pages/NewQuote/NewQuote";
+import QuoteDetail from "./pages/QuoteDetail/QuoteDetail";
 import UrlPathEnum from "./enum/UrlPathEnum";
 import Layout from "./layout/Layout";
 import NotFoundPage from "./pages/NotFoundPage";

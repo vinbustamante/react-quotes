@@ -1,10 +1,10 @@
 import { FormEvent, useRef } from "react";
 import styled from "styled-components";
-import addComment from "../api/quote/addComment";
-import useAsync from "../hooks/useAsync";
-import { QuoteModel } from "../models/QuoteModel";
-import Nullable from "../type/Nullable";
-import AsyncResponse from "./AsyncResponse";
+import addComment from "../../../api/quote/addComment";
+import useAsync from "../../../hooks/useAsync";
+import { QuoteModel } from "../../../models/QuoteModel";
+import Nullable from "../../../type/Nullable";
+import AsyncResponse from "../../../components/AsyncResponse";
 
 const FormStyled = styled.form`
   margin-top: 1rem;

@@ -1,9 +1,9 @@
 import { FormEvent, useRef, useState } from "react";
 // import NavigationPrompt from "react-router-navigation-prompt";
 import styled from "styled-components";
-import { QuoteModel } from "../../models/QuoteModel";
-import Card from "../UI/Card";
-import LoadingSpinner from "../UI/LoadingSpinner";
+import { QuoteModel } from "../../../models/QuoteModel";
+import Card from "../../../components/Card";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 const FormStyled = styled.form`
   position: relative;

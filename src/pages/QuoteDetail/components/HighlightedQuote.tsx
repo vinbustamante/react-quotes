@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { QuoteModel } from "../../models/QuoteModel";
+import { QuoteModel } from "../../../models/QuoteModel";
 
 const FigureStyled = styled.figure`
   background-color: #162b2b;

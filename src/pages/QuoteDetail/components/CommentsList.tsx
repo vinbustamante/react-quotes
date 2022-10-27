@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { QuoteCommentModel } from "../models/QuoteCommentModel";
+import { QuoteCommentModel } from "../../../models/QuoteCommentModel";
 import CommentItem from "./CommentItem";
 
 const UlStyled = styled.ul`

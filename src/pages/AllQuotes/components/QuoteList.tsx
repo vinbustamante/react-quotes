@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
-import { QuoteModel } from "../../models/QuoteModel";
+import { QuoteModel } from "../../../models/QuoteModel";
 
 import QuoteItem from "./QuoteItem";
-import UrlPathEnum from "../../enum/UrlPathEnum";
-import SortEnum from "../../enum/SortEnum";
-import ButtonSorting from "../ButtonSorting";
+import UrlPathEnum from "../../../enum/UrlPathEnum";
+import SortEnum from "../../../enum/SortEnum";
+import ButtonSorting from "../../../components/ButtonSorting";
 
 const UlStyled = styled.ul`
   list-style: none;

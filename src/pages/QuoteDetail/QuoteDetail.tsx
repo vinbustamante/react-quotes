@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
-import Comments from "../components/Comments";
-import RouteParamsEnum from "../enum/RouteParamsEnum";
-import HighlightedQuote from "../components/quotes/HighlightedQuote";
-import useAsync from "../hooks/useAsync";
-import getQuote from "../api/quote/getQuote";
-import AsyncResponse from "../components/AsyncResponse";
+import Comments from "./components/Comments";
+import RouteParamsEnum from "../../enum/RouteParamsEnum";
+import HighlightedQuote from "./components/HighlightedQuote";
+import useAsync from "../../hooks/useAsync";
+import getQuote from "../../api/quote/getQuote";
+import AsyncResponse from "../../components/AsyncResponse";
 
 export default function QuoteDetail() {
   const params = useParams();

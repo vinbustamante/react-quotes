@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import getAllComments from "../api/quote/getAllComments";
-import useAsync from "../hooks/useAsync";
-import { QuoteModel } from "../models/QuoteModel";
-import AsyncResponse from "./AsyncResponse";
+import getAllComments from "../../../api/quote/getAllComments";
+import useAsync from "../../../hooks/useAsync";
+import { QuoteModel } from "../../../models/QuoteModel";
+import AsyncResponse from "../../../components/AsyncResponse";
 import CommentList from "./CommentsList";
 
 import NewCommentForm from "./NewCommentForm";

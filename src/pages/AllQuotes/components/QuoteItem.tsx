@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import UrlPathEnum from "../../enum/UrlPathEnum";
-import { QuoteModel } from "../../models/QuoteModel";
+import UrlPathEnum from "../../../enum/UrlPathEnum";
+import { QuoteModel } from "../../../models/QuoteModel";
 
 const LiStyled = styled.li`
   margin: 1rem 0;

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { AsyncStatusEnum } from "../hooks/useAsync";
-import LoadingSpinner from "./UI/LoadingSpinner";
+import LoadingSpinner from "./LoadingSpinner";
 
 type AsyncStatusRender = PropsWithChildren<{
   status: AsyncStatusEnum;
