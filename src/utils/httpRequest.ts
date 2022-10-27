@@ -32,7 +32,6 @@ export default async function httpRequest(config: HttpRequestConfig) {
       body = JSON.stringify(requestConfig.data);
     }
   }
-  console.log("api: ", api);
   const httpResponse = await fetch(api, {
     headers: {
       ["Content-Type"]: "application/json",

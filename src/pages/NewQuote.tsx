@@ -2,12 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { QuoteModel } from "../models/QuoteModel";
 import QuoteForm from "../components/quotes/QuoteForm";
 import UrlPathEnum from "../enum/UrlPathEnum";
-import useAsync from "../hooks/useAsync";
+import useAsync, { AsyncStatusEnum } from "../hooks/useAsync";
 import addQuote from "../api/addQuote";
 
 export default function NewQuote() {
   const navigate = useNavigate();
-  const { sendRequest, state } = useAsync(addQuote);
+  const {
+    sendRequest,
+    state: { status },
+  } = useAsync(addQuote);
 
   // handler
   async function onAddQuote(quote: QuoteModel) {
@@ -15,5 +18,10 @@ export default function NewQuote() {
     navigate(UrlPathEnum.quotes);
   }
 
-  return <QuoteForm onAddQuote={onAddQuote} />;
+  return (
+    <QuoteForm
+      isLoading={status === AsyncStatusEnum.pending}
+      onAddQuote={onAddQuote}
+    />
+  );
 }

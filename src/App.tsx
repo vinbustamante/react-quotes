@@ -7,7 +7,6 @@ import Layout from "./layout/Layout";
 import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
-  console.log("base api: ", process.env.REACT_APP_API_BASE);
   return (
     <Layout>
       <Routes>

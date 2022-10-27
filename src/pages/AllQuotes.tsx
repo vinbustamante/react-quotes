@@ -1,21 +1,33 @@
-import { useState } from "react";
-import { QuoteModel } from "../models/QuoteModel";
+import { useEffect, useState } from "react";
 import QuoteList from "../components/quotes/QuoteList";
-
-const DUMMY_LIST: QuoteModel[] = [
-  {
-    id: "q1",
-    author: "marvin",
-    text: "do it again",
-  },
-  {
-    id: "q2",
-    author: "marvin",
-    text: "keep going",
-  },
-];
+import useAsync, { AsyncStatusEnum } from "../hooks/useAsync";
+import getAllQuotes from "../api/getAllQuotes";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 export default function AllQuotes() {
-  const [quotes] = useState<QuoteModel[]>(DUMMY_LIST);
-  return <QuoteList quotes={quotes} />;
+  const {
+    sendRequest,
+    state: { data, status },
+  } = useAsync(getAllQuotes);
+
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+  return (
+    <>
+      {status === AsyncStatusEnum.pending && (
+        <div className="centered">
+          <LoadingSpinner />{" "}
+        </div>
+      )}
+      {status === AsyncStatusEnum.error && (
+        <p className="centered focus">There was an error</p>
+      )}
+      {status === AsyncStatusEnum.completed && (
+        <QuoteList quotes={data || []} />
+      )}
+      ;
+    </>
+  );
 }

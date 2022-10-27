@@ -5,7 +5,7 @@ import httpRequest, { HttpMethodEnum } from "../utils/httpRequest";
 
 export default async function addQuote(quote: QuoteModel) {
   return httpRequest({
-    url: `${Constant.apiBase}/${ApiEnum.quotes}`,
+    url: `${Constant.apiBase}/${ApiEnum.quotes}.json`,
     method: HttpMethodEnum.post,
     data: quote,
   });

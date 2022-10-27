@@ -77,7 +77,6 @@ export default function QuoteForm(props: QuoteFormProps) {
   }
 
   function onFormFocused() {
-    console.log("form focus");
     setEntered(true);
   }
 

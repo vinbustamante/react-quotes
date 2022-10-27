@@ -56,6 +56,11 @@ export default function QuoteList({ quotes }: QuoteListProps) {
     );
   }
 
+  // side effect
+  useEffect(() => {
+    setQuoteList(quotes);
+  }, [quotes]);
+
   return (
     <Fragment>
       <SortingContainerStyled className="sorting">

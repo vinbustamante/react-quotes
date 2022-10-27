@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useCallback, useReducer } from "react";
+import { Nullable } from "../type/Nullable";
 
 export enum AsyncStatusEnum {
   idle = "idle",
@@ -7,9 +8,9 @@ export enum AsyncStatusEnum {
   error = "error",
 }
 
-type AsyncState = {
-  data?: any;
-  error?: any;
+export type AsyncState<TModel> = {
+  data: Nullable<TModel>;
+  error: any;
   status: AsyncStatusEnum;
 };
 
@@ -24,7 +25,15 @@ type AsyncReducerAction = {
   payload?: any;
 };
 
-function _asyncReducer(state: AsyncState, action: AsyncReducerAction) {
+type AsyncReducerHandler<TModel> = (
+  state: AsyncState<TModel>,
+  action: AsyncReducerAction
+) => AsyncState<TModel>;
+
+function _asyncReducer<TModel>(
+  state: AsyncState<TModel>,
+  action: AsyncReducerAction
+): AsyncState<TModel> {
   if (action.type === AsyncReducerActionEnum.send) {
     return {
       data: null,
@@ -48,30 +57,38 @@ function _asyncReducer(state: AsyncState, action: AsyncReducerAction) {
   }
 }
 
-type AsyncFunctionHandler = (...requestParams: any) => Promise<any>;
+type AsyncFunctionHandler<TReturn> = (
+  ...requestParams: any
+) => Promise<TReturn>;
 
-export default function useAsync(asyncFunctionHandler: AsyncFunctionHandler) {
-  const [httpState, dispatch] = useReducer(_asyncReducer, {
+export default function useAsync<TReturn>(
+  asyncFunctionHandler: AsyncFunctionHandler<TReturn>
+) {
+  const reducerHandler: AsyncReducerHandler<TReturn> = _asyncReducer;
+  const [httpState, dispatch] = useReducer(reducerHandler, {
     status: AsyncStatusEnum.idle,
     data: null,
     error: null,
   });
 
-  const sendRequest = async (...requestParams: any) => {
-    dispatch({ type: AsyncReducerActionEnum.send });
-    try {
-      const responseData = await asyncFunctionHandler(...requestParams);
-      dispatch({
-        type: AsyncReducerActionEnum.success,
-        payload: responseData,
-      });
-    } catch (error: any) {
-      dispatch({
-        type: AsyncReducerActionEnum.error,
-        payload: error.message || "Something went wrong!",
-      });
-    }
-  };
+  const sendRequest = useCallback(
+    async (...requestParams: any) => {
+      dispatch({ type: AsyncReducerActionEnum.send });
+      try {
+        const responseData = await asyncFunctionHandler(...requestParams);
+        dispatch({
+          type: AsyncReducerActionEnum.success,
+          payload: responseData,
+        });
+      } catch (error: any) {
+        dispatch({
+          type: AsyncReducerActionEnum.error,
+          payload: error.message || "Something went wrong!",
+        });
+      }
+    },
+    [asyncFunctionHandler]
+  );
 
   return {
     sendRequest,

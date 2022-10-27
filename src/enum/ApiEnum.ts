@@ -1,5 +1,5 @@
 enum ApiEnum {
-  quotes = "quotes.json",
+  quotes = "/quotes",
 }
 
 export default ApiEnum;
