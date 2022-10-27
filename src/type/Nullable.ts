@@ -1,1 +1,2 @@
-export type Nullable<TType extends unknown> = TType | null;
+type Nullable<TType extends unknown> = TType | null;
+export default Nullable;

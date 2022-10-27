@@ -1,5 +1,6 @@
 import { FormEvent, useRef } from "react";
 import styled from "styled-components";
+import Nullable from "../type/Nullable";
 
 const FormStyled = styled.form`
   margin-top: 1rem;
@@ -48,7 +49,7 @@ const FormStyled = styled.form`
 `;
 
 export default function NewCommentForm() {
-  const commentTextRef = useRef<any>();
+  const commentTextRef = useRef<Nullable<HTMLTextAreaElement>>(null);
 
   const submitFormHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

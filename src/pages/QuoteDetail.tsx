@@ -4,7 +4,7 @@ import Comments from "../components/Comments";
 import RouteParamsEnum from "../enum/RouteParamsEnum";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
 import useAsync from "../hooks/useAsync";
-import getQuote from "../api/getQuote";
+import getQuote from "../api/quote/getQuote";
 import AsyncResponse from "../components/AsyncResponse";
 
 export default function QuoteDetail() {

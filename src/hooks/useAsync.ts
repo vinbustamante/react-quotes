@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from "react";
-import { Nullable } from "../type/Nullable";
+import Nullable from "../type/Nullable";
 
 export enum AsyncStatusEnum {
   idle = "idle",

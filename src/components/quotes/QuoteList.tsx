@@ -48,7 +48,6 @@ type QuoteListProps = {
 };
 
 export default function QuoteList({ quotes }: QuoteListProps) {
-  console.log("quote: ", quotes);
   const [quoteList, setQuoteList] = useState<QuoteModel[]>(quotes);
 
   function onSorting(sortDirection: SortEnum) {

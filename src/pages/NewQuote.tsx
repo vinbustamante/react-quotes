@@ -3,7 +3,7 @@ import { QuoteModel } from "../models/QuoteModel";
 import QuoteForm from "../components/quotes/QuoteForm";
 import UrlPathEnum from "../enum/UrlPathEnum";
 import useAsync, { AsyncStatusEnum } from "../hooks/useAsync";
-import addQuote from "../api/addQuote";
+import addQuote from "../api/quote/addQuote";
 
 export default function NewQuote() {
   const navigate = useNavigate();

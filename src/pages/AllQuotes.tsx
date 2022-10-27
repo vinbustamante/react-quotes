@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import QuoteList from "../components/quotes/QuoteList";
 import useAsync from "../hooks/useAsync";
-import getAllQuotes from "../api/getAllQuotes";
+import getAllQuotes from "../api/quote/getAllQuotes";
 
 import AsyncResponse from "../components/AsyncResponse";
 
