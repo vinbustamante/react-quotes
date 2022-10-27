@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { QuoteCommentModel } from "../models/QuoteCommentModel";
 import CommentItem from "./CommentItem";
 
 const UlStyled = styled.ul`
@@ -8,14 +9,14 @@ const UlStyled = styled.ul`
 `;
 
 type CommentListProps = {
-  comments: any[];
+  comments: QuoteCommentModel[];
 };
 
-export default function CommentList(props: CommentListProps) {
+export default function CommentList({ comments }: CommentListProps) {
   return (
     <UlStyled>
-      {props.comments.map((comment) => (
-        <CommentItem key={comment.id} text={comment.text} />
+      {comments.map((comment) => (
+        <CommentItem key={comment.id} comment={comment} />
       ))}
     </UlStyled>
   );

@@ -1,4 +1,5 @@
-import HttServiceException from "../exception/HttServiceException";
+import HttServiceException from "../../exception/HttServiceException";
+import Nullable from "../../type/Nullable";
 
 export enum HttpMethodEnum {
   get = "GET",

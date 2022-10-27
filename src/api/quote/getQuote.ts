@@ -2,7 +2,7 @@ import Constant from "../../Constant";
 import ApiEnum from "../../enum/ApiEnum";
 import { QuoteModel } from "../../models/QuoteModel";
 import Nullable from "../../type/Nullable";
-import httpRequest from "../../utils/httpRequest";
+import httpRequest from "../../service/http/httpRequest";
 
 export default async function getQuote(
   quoteId: string

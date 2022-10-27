@@ -1,6 +1,10 @@
 import { FormEvent, useRef } from "react";
 import styled from "styled-components";
+import addComment from "../api/quote/addComment";
+import useAsync from "../hooks/useAsync";
+import { QuoteModel } from "../models/QuoteModel";
 import Nullable from "../type/Nullable";
+import AsyncResponse from "./AsyncResponse";
 
 const FormStyled = styled.form`
   margin-top: 1rem;
@@ -48,26 +52,45 @@ const FormStyled = styled.form`
   }
 `;
 
-export default function NewCommentForm() {
+type NewCommentFormProps = {
+  quote: QuoteModel;
+  onCommentAdded: () => void;
+};
+
+export default function NewCommentForm({
+  quote,
+  onCommentAdded,
+}: NewCommentFormProps) {
   const commentTextRef = useRef<Nullable<HTMLTextAreaElement>>(null);
+  const {
+    sendRequest,
+    state: { status },
+  } = useAsync(addComment);
 
-  const submitFormHandler = (event: FormEvent<HTMLFormElement>) => {
+  const submitFormHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // optional: Could validate here
-
-    // send comment to server
+    if (commentTextRef?.current?.value) {
+      await sendRequest({
+        quoteId: quote.id,
+        comment: commentTextRef?.current?.value,
+      });
+      onCommentAdded();
+    }
   };
 
   return (
-    <FormStyled onSubmit={submitFormHandler}>
-      <div className="control">
-        <label htmlFor="comment">Your Comment</label>
-        <textarea id="comment" rows={5} ref={commentTextRef}></textarea>
-      </div>
-      <div className="actions">
-        <button className="btn">Add Comment</button>
-      </div>
-    </FormStyled>
+    <>
+      <AsyncResponse status={status}>
+        <FormStyled onSubmit={submitFormHandler}>
+          <div className="control">
+            <label htmlFor="comment">Your Comment</label>
+            <textarea id="comment" rows={5} ref={commentTextRef}></textarea>
+          </div>
+          <div className="actions">
+            <button className="btn">Add Comment</button>
+          </div>
+        </FormStyled>
+      </AsyncResponse>
+    </>
   );
 }

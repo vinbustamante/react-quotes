@@ -1,7 +1,8 @@
 import Constant from "../../Constant";
 import ApiEnum from "../../enum/ApiEnum";
 import { QuoteModel } from "../../models/QuoteModel";
-import httpRequest, { HttpMethodEnum } from "../../utils/httpRequest";
+import httpRequest, { HttpMethodEnum } from "../../service/http/httpRequest";
+import ObjectMap from "../../type/ObjectMap";
 
 export default async function getAllQuotes(): Promise<QuoteModel[]> {
   const response = await httpRequest({

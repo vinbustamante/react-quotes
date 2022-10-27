@@ -17,7 +17,9 @@ export default function AsyncResponse({ status, children }: AsyncStatusRender) {
       {status === AsyncStatusEnum.error && (
         <p className="centered focus">There was an error</p>
       )}
-      {status === AsyncStatusEnum.completed && children}
+      {(status === AsyncStatusEnum.idle ||
+        status === AsyncStatusEnum.completed) &&
+        children}
     </>
   );
 }

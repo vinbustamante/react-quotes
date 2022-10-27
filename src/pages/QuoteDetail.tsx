@@ -43,7 +43,7 @@ export default function QuoteDetail() {
             />
             <Route
               path={`/:${RouteParamsEnum.quoteId}/comments`}
-              element={<Comments />}
+              element={<Comments quote={quote} />}
             />
           </Routes>
         )}

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { QuoteCommentModel } from "../models/QuoteCommentModel";
 
 const LiStyled = styled.li`
   margin: 1rem 0;
@@ -9,13 +10,13 @@ const LiStyled = styled.li`
 `;
 
 type CommentItemProps = {
-  text: string;
+  comment: QuoteCommentModel;
 };
 
-export default function CommentItem({ text }: CommentItemProps) {
+export default function CommentItem({ comment }: CommentItemProps) {
   return (
     <LiStyled>
-      <p>{text}</p>
+      <p>{comment.comment}</p>
     </LiStyled>
   );
 }
